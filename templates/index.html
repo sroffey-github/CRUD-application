@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>CRUD Application</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">CRUD</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto"></ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+    </nav>
+
+    <hr class="rounded">
+
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in data %}
+            <tr>
+                <th scope="row">{{user[0]}}</th>
+                <td>{{user[1]}}</td>
+                <td>{{user[2]}}</td>
+                <td>{{user[3]}}</td>
+                <td><a class="btn btn-danger" href="/delete/{{user[0]}}">Delete</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+    <button class="open-button btn btn-outline-success" id="open-btn" onclick="openForm()">Open Form</button>
+
+    <div id="form-popup">
+        <form id="form-container", method="POST">
+            <div class="form-group">
+            <label for="formGroupExampleInput">First Name</label>
+            <input type="text" name="firstname" class="form-control" id="formGroupExampleInput" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+            <label for="formGroupExampleInput2">Last Name</label>
+            <input type="text" name="lastname" class="form-control" id="formGroupExampleInput2" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Email</label>
+                <input type="email" name="email" class="form-control" id="formGroupExampleInput2" placeholder="Email Address" required>
+            </div>
+            <input type="submit" class="btn btn-outline-primary" value="Add">
+            <button type="button" class="btn cancel btn-outline-danger" onclick="closeForm()">Close</button>
+            {% for msg in get_flashed_messages() %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Oh snap!</strong> {{msg}}
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+
+    <script>
+        function openForm() {
+            document.getElementById("form-popup").style.display = "block";
+            document.getElementById('open-btn').style.display = "none";
+        }
+
+        function closeForm() {
+            document.getElementById("form-popup").style.display = "none";
+            document.getElementById('open-btn').style.display = "block";
+        }
+    </script>
+</body>
+</html>
