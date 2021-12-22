@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">CRUD</a>
+        <a class="navbar-brand" href="/">CRUD Application</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -41,13 +41,32 @@
                 <td>{{user[1]}}</td>
                 <td>{{user[2]}}</td>
                 <td>{{user[3]}}</td>
-                <td><a class="btn btn-danger" href="/delete/{{user[0]}}">Delete</a></td>
+                <td>
+                  <a class="btn btn-danger" href="/delete/{{user[0]}}">Delete</a>
+                  <button class="btn btn-warning" id="edit-btn" onclick="openEditForm('{{user[0]}}', '{{user[1]}}', '{{user[2]}}', '{{user[3]}}')">Edit</button>
+                </td>
             </tr>
           {% endfor %}
         </tbody>
     </table>
 
-    <button class="open-button btn btn-outline-success" id="open-btn" onclick="openForm()">Open Form</button>
+    <form class="form-inline" id="editForm" method="POST">
+      <div class="form-content">
+
+        <h1>Edit User Data</h1>
+        <label class="sr-only" for="inlineFormInputName2">Name</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" name="editid" id="id_" readonly>
+        <input type="text" class="form-control mb-2 mr-sm-2" name="editfirstname" id="firstname">
+        <input type="text" class="form-control mb-2 mr-sm-2" name="editlastname" id="lastname">
+        <input type="email" class="form-control mb-2 mr-sm-2" name="editemail" id="email">
+      
+        <input type="submit" name="submitBtn" class="btn btn-primary mb-2" value="Save">
+        <input type="submit" name="submitBtn" class="btn btn-outline-danger mb-2" value="Close">
+        
+      </div>
+    </form>
+
+    <button class="open-button btn btn-outline-success" id="open-btn" onclick="openForm()">Add User</button>
 
     <div id="form-popup">
         <form id="form-container", method="POST">
@@ -63,7 +82,7 @@
                 <label for="formGroupExampleInput2">Email</label>
                 <input type="email" name="email" class="form-control" id="formGroupExampleInput2" placeholder="Email Address" required>
             </div>
-            <input type="submit" class="btn btn-outline-primary" value="Add">
+            <input type="submit" class="btn btn-outline-primary" name="submitBtn" value="Add">
             <button type="button" class="btn cancel btn-outline-danger" onclick="closeForm()">Close</button>
             {% for msg in get_flashed_messages() %}
                 <div class="alert alert-danger" role="alert">
@@ -75,13 +94,26 @@
 
     <script>
         function openForm() {
-            document.getElementById("form-popup").style.display = "block";
-            document.getElementById('open-btn').style.display = "none";
+          document.getElementById("form-popup").style.display = "block";
+          document.getElementById('open-btn').style.display = "none";
         }
 
         function closeForm() {
-            document.getElementById("form-popup").style.display = "none";
-            document.getElementById('open-btn').style.display = "block";
+          document.getElementById("form-popup").style.display = "none";
+          document.getElementById('open-btn').style.display = "block";
+        }
+
+        function openEditForm(id_, firstname, lastname, email) {
+          document.getElementById('editForm').style.display = "block";
+
+          document.getElementById('id_').value = id_;
+          document.getElementById('firstname').value = firstname;
+          document.getElementById('lastname').value = lastname;
+          document.getElementById('email').value = email;
+        }
+
+        function closeEditForm() {
+          document.getElementById('editForm').style.display = "none";
         }
     </script>
 </body>

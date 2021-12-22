@@ -77,8 +77,26 @@ def delete_user(id_):
         conn = sqlite3.connect(DB_FILE)
         c = conn.cursor()
 
-        c.execute('DELETE FROM Users WHERE id = ?', (id_))
+        c.execute('DELETE FROM Users WHERE id=?', (id_))
         conn.commit()
         return True
+    else:
+        return False
+
+def edit_user(id_, firstname, lastname, email):
+    if id_exists(id_):
+        if firstname.strip() == "":
+            return False
+        if lastname.strip() == "":
+            return False
+        if email.strip() == "":
+            return False
+        else:
+            conn = sqlite3.connect(DB_FILE)
+            c = conn.cursor()
+
+            c.execute('UPDATE Users SET firstname=?, lastname=?, email=? WHERE id=?', (firstname, lastname, email, id_))
+            conn.commit()
+            return True
     else:
         return False

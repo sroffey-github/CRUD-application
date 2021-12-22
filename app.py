@@ -7,14 +7,27 @@ app.config['SECRET_KEY'] = str(uuid.uuid4())
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        firstname = request.form['firstname']
-        lastname = request.form['lastname']
-        email = request.form['email']
-        if config.add_user(firstname, lastname, email):
-            return render_template('index.html', data=config.get_data())
-        else:
-            flash('Error Adding User!')
-            return render_template('index.html', data=config.get_data())
+
+        if request.form['submitBtn'] == "Add":
+
+            firstname = request.form['firstname']
+            lastname = request.form['lastname']
+            email = request.form['email']
+            if config.add_user(firstname, lastname, email):
+                return render_template('index.html', data=config.get_data())
+            else:
+                flash('Error Adding User!')
+                return render_template('index.html', data=config.get_data())
+        elif request.form['submitBtn'] == "Save":
+            id_ = request.form['editid']
+            firstname = request.form['editfirstname']
+            lastname = request.form['editlastname']
+            email = request.form['editemail']
+            if config.edit_user(id_, firstname, lastname, email):
+                return render_template('index.html', data=config.get_data())
+            else:
+                flash('Error Editing User Data!')
+                return render_template('index.html', data=config.get_data())
     else:
         return render_template('index.html', data=config.get_data()) # add jinja2 data
 
