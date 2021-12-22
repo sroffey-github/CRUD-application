@@ -1,10 +1,5 @@
 * {box-sizing: border-box;}
 
-.rounded {
-    border-top: 2px solid #bbb;
-    border-radius: 5px;
-}
-
 .open-button {
     position: fixed;
     bottom: 23px;

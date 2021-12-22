@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 import config, uuid
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = uuid.uuid4()
+app.config['SECRET_KEY'] = str(uuid.uuid4())
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
